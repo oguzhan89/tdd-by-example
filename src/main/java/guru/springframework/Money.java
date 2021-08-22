@@ -1,6 +1,9 @@
 package guru.springframework;
 
-public abstract class Money {
+import lombok.ToString;
+
+@ToString
+public class Money {
 
     protected int amount;
     protected String currency;
@@ -10,19 +13,21 @@ public abstract class Money {
         this.currency = currency;
     }
 
-    public abstract Money times(int multiplier);
-
-    public static Money dollar(int amount){
+    public static Money dollar(int amount) {
         return new Dollar(amount, "USD");
     }
 
-    public static Money franc(int amount){
-        return new Franc(amount , "CHF");
+    public static Money franc(int amount) {
+        return new Franc(amount, "CHF");
     }
 
-    public boolean equals(Object object){
+    public boolean equals(Object object) {
         Money money = (Money) object;
         return this.amount == money.amount
-                && this.getClass().equals(object.getClass());
+                && this.currency.equals(money.currency);
+    }
+
+    public Money times(int multiplier) {
+        return new Money(amount * multiplier, this.currency);
     }
 }
